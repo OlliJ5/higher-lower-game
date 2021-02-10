@@ -1,5 +1,7 @@
 # HIGHER OR LOWER GAME
 
+Higher or lower game NBA edition. Inspired by the google higher lower game
+
 ## TODO
 
 * [x] INITIALIZE PROJECT
