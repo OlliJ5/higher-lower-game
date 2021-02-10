@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import playerService from "./requests/players";
 
 const GameContainer = styled.div`
   text-align: center;
@@ -33,21 +34,48 @@ const Option = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`;
-
-const TopOption = styled(Option)`
-  background-image: url("https://cdn.nba.com/headshots/nba/latest/1040x760/203500.png");
-  background-color: blue;
+  background-image: ${(props) =>
+    `url(https://cdn.nba.com/headshots/nba/latest/1040x760/${props.playerId}.png)`};
   background-position: center;
   background-size: cover;
 `;
 
-const BottomOption = styled(Option)`
-  background: red;
-`;
-
 const GamePage = ({ playerList }) => {
-  if (!playerList) {
+  const [firstOption, setFirstOption] = useState(null);
+  const [secondOption, setSecondOption] = useState(null);
+
+  useEffect(() => {
+    if (!playerList) {
+      return;
+    }
+
+    async function fetchData() {
+      const firstId = Math.floor(Math.random() * Math.floor(playerList.length));
+      const secondId = Math.floor(
+        Math.random() * Math.floor(playerList.length)
+      );
+
+      console.log(playerList[firstId]);
+      console.log(playerList[secondId]);
+
+      const firstPlayer = await playerService.getPlayerInfo(
+        playerList[firstId].id
+      );
+      const secondPlayer = await playerService.getPlayerInfo(
+        playerList[secondId].id
+      );
+
+      console.log(firstPlayer);
+      console.log(secondPlayer);
+
+      setFirstOption(firstPlayer);
+      setSecondOption(secondPlayer);
+    }
+
+    fetchData();
+  }, [playerList]);
+
+  if (!firstOption || !secondOption) {
     return null;
   }
   return (
@@ -55,13 +83,17 @@ const GamePage = ({ playerList }) => {
       {/* <GameHeader>
         <h1>HIGHER OR LOWER</h1>
       </GameHeader> */}
-      <TopOption>
-        <h2>{playerList[0].full_name}</h2>
-      </TopOption>
+      <Option playerId={firstOption.PLAYER_ID} team={firstOption.team}>
+        <h2>
+          {firstOption.PLAYER_NAME} ({firstOption.team})
+        </h2>
+      </Option>
       <Versus>VS</Versus>
-      <BottomOption>
-        <h2>{playerList[1].full_name}</h2>
-      </BottomOption>
+      <Option playerId={secondOption.PLAYER_ID} team={secondOption.team}>
+        <h2>
+          {secondOption.PLAYER_NAME} ({secondOption.team})
+        </h2>
+      </Option>
     </GameContainer>
   );
 };
