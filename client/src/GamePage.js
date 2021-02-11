@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import playerService from "./requests/players";
+import colorPicker from "./utils/colorPicker";
 
 const GameContainer = styled.div`
   text-align: center;
@@ -38,6 +39,7 @@ const Option = styled.div`
     `url(https://cdn.nba.com/headshots/nba/latest/1040x760/${props.playerId}.png)`};
   background-position: center;
   background-size: cover;
+  background-color: ${(props) => colorPicker.mainTeamColor(props.team)};
 `;
 
 const GamePage = ({ playerList }) => {
@@ -49,14 +51,11 @@ const GamePage = ({ playerList }) => {
       return;
     }
 
-    async function fetchData() {
+    async function fetchInitialPlayers() {
       const firstId = Math.floor(Math.random() * Math.floor(playerList.length));
       const secondId = Math.floor(
         Math.random() * Math.floor(playerList.length)
       );
-
-      console.log(playerList[firstId]);
-      console.log(playerList[secondId]);
 
       const firstPlayer = await playerService.getPlayerInfo(
         playerList[firstId].id
@@ -72,7 +71,7 @@ const GamePage = ({ playerList }) => {
       setSecondOption(secondPlayer);
     }
 
-    fetchData();
+    fetchInitialPlayers();
   }, [playerList]);
 
   if (!firstOption || !secondOption) {
