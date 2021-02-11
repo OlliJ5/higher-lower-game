@@ -42,6 +42,39 @@ const Option = styled.div`
   background-color: ${(props) => colorPicker.mainTeamColor(props.team)};
 `;
 
+const TextContainer = styled.div`
+  color: #fff;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  line-height: 1.5;
+`;
+
+const PlayerName = styled.h2`
+  font-size: 1.45em;
+  font-weight: 600;
+`;
+
+const PlayerPoints = styled.h3`
+  font-size: 1.45em;
+  font-weight: 600;
+  color: #fff989;
+`;
+
+const Text = styled.p`
+  font-size: 1.25em;
+  font-weight: 400;
+`;
+
+const Button = styled.button`
+  width: 50%;
+  background: none;
+  color: #fff989;
+  font-size: 1.45em;
+  border: 2px solid white;
+  padding: 0.3em 0 0.3em 0;
+  border-radius: 30px;
+`;
+
 const GamePage = ({ playerList }) => {
   const [firstOption, setFirstOption] = useState(null);
   const [secondOption, setSecondOption] = useState(null);
@@ -83,15 +116,27 @@ const GamePage = ({ playerList }) => {
         <h1>HIGHER OR LOWER</h1>
       </GameHeader> */}
       <Option playerId={firstOption.PLAYER_ID} team={firstOption.team}>
-        <h2>
-          {firstOption.PLAYER_NAME} ({firstOption.team})
-        </h2>
+        <TextContainer>
+          <PlayerName>
+            {firstOption.PLAYER_NAME} ({firstOption.team})
+          </PlayerName>
+          <Text>is averaging</Text>
+          <PlayerPoints>{firstOption.PTS} PPG</PlayerPoints>
+          <Text>in the 2020-2021 season</Text>
+        </TextContainer>
       </Option>
       <Versus>VS</Versus>
       <Option playerId={secondOption.PLAYER_ID} team={secondOption.team}>
-        <h2>
-          {secondOption.PLAYER_NAME} ({secondOption.team})
-        </h2>
+        <TextContainer>
+          <PlayerName>
+            {secondOption.PLAYER_NAME} ({secondOption.team})
+          </PlayerName>
+          <Text>is averaging</Text>
+          <Button>More</Button>
+          <br />
+          <Button>Less</Button>
+          <Text>PPG than {firstOption.PLAYER_NAME}</Text>
+        </TextContainer>
       </Option>
     </GameContainer>
   );
