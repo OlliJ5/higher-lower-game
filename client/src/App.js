@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import playerService from "./requests/players";
 import GamePage from "./GamePage";
 import "./reset.css";
+import GameOverPage from "./GameOverPage";
 
 const App = () => {
   const [playerList, setPlayerList] = useState(null);
+  const [gameStage, setGameStage] = useState("PLAYING");
 
   useEffect(() => {
     async function fetchData() {
@@ -16,7 +18,10 @@ const App = () => {
   }, []);
   return (
     <div>
-      <GamePage playerList={playerList} />
+      {gameStage === "PLAYING" && (
+        <GamePage playerList={playerList} setGameStage={setGameStage} />
+      )}
+      {gameStage === "GAME-OVER" && <GameOverPage />}
     </div>
   );
 };
