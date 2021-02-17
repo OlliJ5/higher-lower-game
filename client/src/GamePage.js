@@ -3,6 +3,7 @@ import styled from "styled-components";
 import playerService from "./requests/players";
 import colorPicker from "./utils/colorPicker";
 import CountUp from "react-countup";
+import MiddleCircle from "./MiddleCircle";
 
 const GameContainer = styled.div`
   text-align: center;
@@ -16,25 +17,6 @@ const GameHeader = styled.header`
   color: white;
   font-weight: 600;
   margin: 0.5em 0.5em 0 0;
-`;
-
-const Versus = styled.div`
-  border-radius: 50%;
-  height: 60px;
-  width: 60px;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  margin-left: -32px;
-  margin-top: -32px;
-  border: none;
-  font-size: 1.3em;
-  font-weight: 600;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background-color: white;
-  border: 2px solid gray;
 `;
 
 const Option = styled.div`
@@ -90,7 +72,9 @@ const Button = styled.button`
 const GamePage = ({ playerList, setGameStage }) => {
   const [firstOption, setFirstOption] = useState(null);
   const [secondOption, setSecondOption] = useState(null);
-  const [answering, setAnswering] = useState(true);
+  const [isAnswering, setIsAnswering] = useState(true);
+  const [answerCorrect, setAnswerCorrect] = useState(null);
+  const [iconToShow, setIconToShow] = useState(null);
   const [score, setScore] = useState(0);
 
   function sleep(ms) {
@@ -125,24 +109,36 @@ const GamePage = ({ playerList, setGameStage }) => {
     fetchInitialPlayers();
   }, [playerList]);
 
-  const choose = async (optionChosen) => {
-    setAnswering(false);
+  const checkAnswer = (optionChosen) => {
     const correctAnswer =
       secondOption.PTS > firstOption.PTS ? "HIGHER" : "LOWER";
 
-    if (correctAnswer === optionChosen) {
-      console.log("OIKEIN!!!");
+    return correctAnswer === optionChosen;
+  };
+
+  const choose = async (optionChosen) => {
+    setIsAnswering(false);
+    if (checkAnswer(optionChosen)) {
+      setAnswerCorrect(true);
       setScore(score + 1);
-      await sleep(2000);
+      await sleep(3500); //countup and circle animation
       setFirstOption(secondOption);
       const newId = Math.floor(Math.random() * Math.floor(playerList.length));
       const newPlayer = await playerService.getPlayerInfo(playerList[newId].id);
       setSecondOption(newPlayer);
-      setAnswering(true);
+      setIsAnswering(true);
     } else {
-      console.log("VÄÄRIN!!!");
+      setAnswerCorrect(false);
+      await sleep(3500); //countup and circle animation
       setGameStage("GAME-OVER");
     }
+  };
+
+  const handleAnimation = async () => {
+    console.log("animaatio loppui");
+    setIconToShow(answerCorrect);
+    await sleep(1500); //duration of the animation in the middle circle
+    setIconToShow(null);
   };
 
   if (!firstOption || !secondOption) {
@@ -161,7 +157,7 @@ const GamePage = ({ playerList, setGameStage }) => {
           <Text>in the 2020-2021 season</Text>
         </TextContainer>
       </Option>
-      <Versus>VS</Versus>
+      <MiddleCircle iconToShow={iconToShow} />
       <Option playerId={secondOption.PLAYER_ID} team={secondOption.team}>
         <TextContainer>
           <PlayerName>
@@ -169,20 +165,21 @@ const GamePage = ({ playerList, setGameStage }) => {
           </PlayerName>
           <Text>is averaging</Text>
 
-          {answering && (
+          {isAnswering && (
             <div>
               <Button onClick={() => choose("HIGHER")}>More</Button>
               <Button onClick={() => choose("LOWER")}>Less</Button>
               <Text>PPG than {firstOption.PLAYER_NAME}</Text>
             </div>
           )}
-          {!answering && (
+          {!isAnswering && (
             <div>
               <PlayerPoints>
                 <CountUp
                   end={secondOption.PTS}
                   decimals={1}
                   suffix={" PPG"}
+                  onEnd={handleAnimation}
                 />
               </PlayerPoints>
               <Text>in the 2020-2021 season</Text>
