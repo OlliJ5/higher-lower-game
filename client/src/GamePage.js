@@ -64,18 +64,17 @@ const Button = styled.button`
   font-size: 1.25em;
   font-weight: 600;
   border: 2px solid white;
-  padding: 0.4em 0 0.4em 0;
+  padding: 0.5em 0 0.35em 0;
   border-radius: 30px;
   margin: 0.3em auto 0.3em auto;
 `;
 
-const GamePage = ({ playerList, setGameStage }) => {
+const GamePage = ({ playerList, setGameStage, score, setScore }) => {
   const [firstOption, setFirstOption] = useState(null);
   const [secondOption, setSecondOption] = useState(null);
   const [isAnswering, setIsAnswering] = useState(true);
   const [answerCorrect, setAnswerCorrect] = useState(null);
   const [iconToShow, setIconToShow] = useState(null);
-  const [score, setScore] = useState(0);
 
   function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -99,9 +98,6 @@ const GamePage = ({ playerList, setGameStage }) => {
         playerList[secondId].id
       );
 
-      console.log(firstPlayer);
-      console.log(secondPlayer);
-
       setFirstOption(firstPlayer);
       setSecondOption(secondPlayer);
     }
@@ -110,6 +106,11 @@ const GamePage = ({ playerList, setGameStage }) => {
   }, [playerList]);
 
   const checkAnswer = (optionChosen) => {
+    //if same points, you get a freebie
+    if (secondOption.PTS === firstOption.PTS) {
+      return true;
+    }
+
     const correctAnswer =
       secondOption.PTS > firstOption.PTS ? "HIGHER" : "LOWER";
 
@@ -129,17 +130,19 @@ const GamePage = ({ playerList, setGameStage }) => {
       setIsAnswering(true);
     } else {
       setAnswerCorrect(false);
-      await sleep(3500); //countup and circle animation
+      await sleep(3600); //countup and circle animation plus some
       setGameStage("GAME-OVER");
     }
   };
 
-  const handleAnimation = async () => {
-    console.log("animaatio loppui");
+  const handleCircleAnimation = async () => {
     setIconToShow(answerCorrect);
     await sleep(1500); //duration of the animation in the middle circle
     setIconToShow(null);
+    handleTransitionAnimation();
   };
+
+  const handleTransitionAnimation = () => {};
 
   if (!firstOption || !secondOption) {
     return null;
@@ -179,7 +182,7 @@ const GamePage = ({ playerList, setGameStage }) => {
                   end={secondOption.PTS}
                   decimals={1}
                   suffix={" PPG"}
-                  onEnd={handleAnimation}
+                  onEnd={handleCircleAnimation}
                 />
               </PlayerPoints>
               <Text>in the 2020-2021 season</Text>

@@ -8,9 +8,11 @@ const correctAnswerAnimation = keyframes`
   0% {
     background-color: white;
   }
-  100% {
+  66%  {
     background-color: #4BB543;
     background-image: url(${checkIcon});
+    background-position: center;
+    background-size: cover;
   }
 `;
 
@@ -18,8 +20,11 @@ const falseAnswerAnimation = keyframes`
   0% {
     background-color: white;
   }
-  100% {
+  66% {
     background-color: #F32013;
+    background-image: url(${wrongIcon});
+    background-position: center;
+    background-size: cover;
   }
 `;
 
@@ -44,32 +49,19 @@ const CircleBase = styled.div`
 
 const CircleCorrect = styled(CircleBase)`
   animation: ${correctAnswerAnimation} 1.5s;
-  /* background-image: url(${checkIcon}); */
-  background-position: center;
-  background-size: cover;
 `;
 
 const CircleFalse = styled(CircleBase)`
   animation: ${falseAnswerAnimation} 1.5s;
-  background-image: url(${wrongIcon});
-  background-position: center;
-  background-size: cover;
 `;
 
 const MiddleCircle = ({ iconToShow }) => {
-  console.log("icon to show", iconToShow);
   return (
     <div>
       {iconToShow === null && <CircleBase>VS</CircleBase>}
       {iconToShow && <CircleCorrect />}
       {iconToShow === false && <CircleFalse />}
     </div>
-    // {iconToShow && (
-    //   <img src={checkIcon} alt="check mark to indicate correct answer" />
-    // )}
-    // {iconToShow === false && (
-    //   <img src={wrongIcon} alt="x-icon to indicate false answer" />
-    // )}
   );
 };
 

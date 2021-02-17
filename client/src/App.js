@@ -6,12 +6,12 @@ import GameOverPage from "./GameOverPage";
 
 const App = () => {
   const [playerList, setPlayerList] = useState(null);
+  const [score, setScore] = useState(0);
   const [gameStage, setGameStage] = useState("PLAYING");
 
   useEffect(() => {
     async function fetchData() {
       const players = await playerService.getPlayers();
-      console.log(players);
       setPlayerList(players);
     }
     fetchData();
@@ -19,9 +19,14 @@ const App = () => {
   return (
     <div>
       {gameStage === "PLAYING" && (
-        <GamePage playerList={playerList} setGameStage={setGameStage} />
+        <GamePage
+          playerList={playerList}
+          setGameStage={setGameStage}
+          score={score}
+          setScore={setScore}
+        />
       )}
-      {gameStage === "GAME-OVER" && <GameOverPage />}
+      {gameStage === "GAME-OVER" && <GameOverPage score={score} />}
     </div>
   );
 };

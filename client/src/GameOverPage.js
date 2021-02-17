@@ -14,10 +14,12 @@ const GameContainer = styled.div`
   justify-content: center;
 `;
 
-const GameOverPage = () => {
+const GameOverPage = ({ score }) => {
   return (
     <GameContainer>
       <h1>RIP GG</h1>
+      <p>You scored {score} points</p>
+      <button>Try again big man</button>
     </GameContainer>
   );
 };
