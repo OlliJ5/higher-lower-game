@@ -3,8 +3,12 @@ from flask_cors import CORS
 from nba_api.stats.static import players
 from nba_api.stats.endpoints import commonplayerinfo
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='./build', static_url_path='/')
 cors = CORS(app)
+
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
 
 
 @app.route('/players')
