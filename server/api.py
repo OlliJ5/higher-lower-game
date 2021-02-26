@@ -59,7 +59,7 @@ def get_team_abbreviation(team_name):
         'New Orleans Pelicans': 'NOP',
         'Utah Jazz': 'UTA',
         'Houston Rockets': 'HOU',
-        'Los Angeles Clippers': 'LAC',
+        'LA Clippers': 'LAC',
         'Milwaukee Bucks': 'MIL',
         'Cleveland Cavaliers': 'CLE',
         'Chicago Bulls': 'CHI',

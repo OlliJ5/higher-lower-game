@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import playerService from "./requests/players";
 import colorPicker from "./utils/colorPicker";
@@ -80,36 +80,40 @@ const GamePage = ({ playerList, setGameStage, score, setScore }) => {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
+  const fetchPlayer = useCallback(async () => {
+    while (true) {
+      const listIndex = Math.floor(
+        Math.random() * Math.floor(playerList.length)
+      );
+      const player = await playerService.getPlayerInfo(
+        playerList[listIndex].id
+      );
+
+      if (!player.error) {
+        console.log("pelaaja", player);
+        return player;
+      }
+    }
+  }, [playerList]);
+
   useEffect(() => {
     if (!playerList) {
       return;
     }
 
-    async function fetchInitialPlayers() {
-      const firstId = Math.floor(Math.random() * Math.floor(playerList.length));
-      const secondId = Math.floor(
-        Math.random() * Math.floor(playerList.length)
-      );
-
-      const firstPlayer = await playerService.getPlayerInfo(
-        playerList[firstId].id
-      );
-      const secondPlayer = await playerService.getPlayerInfo(
-        playerList[secondId].id
-      );
+    const fetchInitialPlayers = async () => {
+      const firstPlayer = await fetchPlayer();
+      const secondPlayer = await fetchPlayer();
 
       setFirstOption(firstPlayer);
       setSecondOption(secondPlayer);
-
-      console.log("eka", firstPlayer);
-      console.log("toka", secondPlayer);
-    }
+    };
 
     fetchInitialPlayers();
-  }, [playerList]);
+  }, [playerList, fetchPlayer]);
 
   const checkAnswer = (optionChosen) => {
-    //if same points, you get a freebie
+    //if the average is the same, you get a freebie
     if (secondOption.PPG === firstOption.PPG) {
       return true;
     }
@@ -127,8 +131,7 @@ const GamePage = ({ playerList, setGameStage, score, setScore }) => {
       setScore(score + 1);
       await sleep(3500); //countup and circle animation
       setFirstOption(secondOption);
-      const newId = Math.floor(Math.random() * Math.floor(playerList.length));
-      const newPlayer = await playerService.getPlayerInfo(playerList[newId].id);
+      const newPlayer = await fetchPlayer();
       setSecondOption(newPlayer);
       setIsAnswering(true);
     } else {
