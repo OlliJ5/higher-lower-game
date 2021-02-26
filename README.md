@@ -18,3 +18,17 @@ NBA API is very restrictive and undocumented. You are not able to make many
 calls before being timed out. My app doesn't make many call in a row so it 
 works fine locally. Trying to host the app on Heroku did not work 
 since the API has blacklisted many hosting sites :( 
+
+## Deploy
+
+```
+pip freeze > requirements.txt
+```
+
+```
+npm run build
+```
+
+```
+git subtree push --prefix server heroku master
+```
