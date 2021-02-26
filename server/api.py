@@ -1,10 +1,12 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 from nba_api.stats.static import players
-from nba_api.stats.endpoints import commonplayerinfo
+import requests
+from bs4 import BeautifulSoup
 
 app = Flask(__name__, static_folder='./build', static_url_path='/')
 cors = CORS(app)
+
 
 @app.route('/')
 def index():
@@ -15,34 +17,23 @@ def index():
 def get_active_players():
     player_list = players.get_active_players()
     print(len(player_list))
-
-    # active_player_information = []
-    # i = 0
-
-    # for player in player_list:
-    #     player_info = commonplayerinfo.CommonPlayerInfo(
-    #         player_id=player['id']).get_normalized_dict()
-
-    #     player_stats = player_info['PlayerHeadlineStats'][0]
-    #     player_team = player_info['CommonPlayerInfo'][0]['TEAM_ABBREVIATION']
-
-    #     player_stats['team'] = player_team
-    #     active_player_information.append(player_stats)
-    #     i += 1
-    #     if i > 4:
-    #         break
-
     return jsonify(player_list)
 
 
 @app.route('/players/<id>')
 def get_player_info(id):
-    print('pelaajan id:', id)
-    player_info = commonplayerinfo.CommonPlayerInfo(
-        player_id=id).get_normalized_dict()
+    print('\n\n\npelaajan id:', id, '\n\n\n')
 
-    player_stats = player_info['PlayerHeadlineStats'][0]
-    player_team = player_info['CommonPlayerInfo'][0]['TEAM_ABBREVIATION']
+    URL = f'https://www.nba.com/player/{id}'
+    page = requests.get(URL)
+    soup = BeautifulSoup(page.content, 'html.parser')
 
-    player_stats['team'] = player_team
-    return player_stats
+    ppg = soup.find(class_='PlayerSummary_playerStatValue__3hvQY').text
+    name = soup.find_all(class_='PlayerSummary_playerNameText__K7ZXO')
+    first_name = name[0].text
+    last_name = name[1].text
+
+    print(ppg)
+    player_info = {'id': int(
+        id), 'name': f'{first_name} {last_name}', 'PPG': float(ppg), 'team': 'test'}
+    return jsonify(player_info)

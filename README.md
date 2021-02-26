@@ -6,7 +6,15 @@ Higher or lower game NBA edition. Inspired by the google higher lower game
 
 * [x] INITIALIZE PROJECT
 * [] START PAGE (MOBILE)
-* [] PLAYING PAGE WITH RANDOM DATA (MOBILE)
+* [x] PLAYING PAGE WITH RANDOM DATA (MOBILE)
 * [] GAME OVER PAGE (MOBILE)
-* [] PLUG IN NBA DATA
+* [x] PLUG IN NBA DATA
 * [] RESPONSIVE
+
+
+## Problems
+
+NBA API is very restrictive and undocumented. You are not able to make many 
+calls before being timed out. My app doesn't make many call in a row so it 
+works fine locally. Trying to host the app on Heroku did not work 
+since the API has blacklisted many hosting sites :( 

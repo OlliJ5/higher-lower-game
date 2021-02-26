@@ -100,6 +100,9 @@ const GamePage = ({ playerList, setGameStage, score, setScore }) => {
 
       setFirstOption(firstPlayer);
       setSecondOption(secondPlayer);
+
+      console.log("eka", firstPlayer);
+      console.log("toka", secondPlayer);
     }
 
     fetchInitialPlayers();
@@ -107,12 +110,12 @@ const GamePage = ({ playerList, setGameStage, score, setScore }) => {
 
   const checkAnswer = (optionChosen) => {
     //if same points, you get a freebie
-    if (secondOption.PTS === firstOption.PTS) {
+    if (secondOption.PPG === firstOption.PPG) {
       return true;
     }
 
     const correctAnswer =
-      secondOption.PTS > firstOption.PTS ? "HIGHER" : "LOWER";
+      secondOption.PPG > firstOption.PPG ? "HIGHER" : "LOWER";
 
     return correctAnswer === optionChosen;
   };
@@ -150,21 +153,21 @@ const GamePage = ({ playerList, setGameStage, score, setScore }) => {
   return (
     <GameContainer>
       <GameHeader>Score: {score}</GameHeader>
-      <Option playerId={firstOption.PLAYER_ID} team={firstOption.team}>
+      <Option playerId={firstOption.id} team={firstOption.team}>
         <TextContainer>
           <PlayerName>
-            {firstOption.PLAYER_NAME} ({firstOption.team})
+            {firstOption.name} ({firstOption.team})
           </PlayerName>
           <Text>is averaging</Text>
-          <PlayerPoints>{firstOption.PTS} PPG</PlayerPoints>
+          <PlayerPoints>{firstOption.PPG} PPG</PlayerPoints>
           <Text>in the 2020-2021 season</Text>
         </TextContainer>
       </Option>
       <MiddleCircle iconToShow={iconToShow} />
-      <Option playerId={secondOption.PLAYER_ID} team={secondOption.team}>
+      <Option playerId={secondOption.id} team={secondOption.team}>
         <TextContainer>
           <PlayerName>
-            {secondOption.PLAYER_NAME} ({secondOption.team})
+            {secondOption.name} ({secondOption.team})
           </PlayerName>
           <Text>is averaging</Text>
 
@@ -179,7 +182,7 @@ const GamePage = ({ playerList, setGameStage, score, setScore }) => {
             <div>
               <PlayerPoints>
                 <CountUp
-                  end={secondOption.PTS}
+                  end={secondOption.PPG}
                   decimals={1}
                   suffix={" PPG"}
                   onEnd={handleCircleAnimation}
