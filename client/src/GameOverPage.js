@@ -57,9 +57,11 @@ const Button = styled.button`
   margin: 1em auto 1em auto;
 `;
 
-const GameOverPage = ({ score }) => {
+const GameOverPage = ({ score, setScore, setGameStage }) => {
   const resetGame = () => {
     console.log("haloo män");
+    setScore(0);
+    setGameStage("PLAYING");
   };
 
   return (

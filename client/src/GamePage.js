@@ -16,6 +16,7 @@ const GameHeader = styled.header`
   right: 0;
   color: white;
   font-weight: 600;
+  font-size: 1.25em;
   margin: 0.5em 0.5em 0 0;
 `;
 
@@ -66,7 +67,7 @@ const Button = styled.button`
   font-size: 1.25em;
   font-weight: 600;
   border: 2px solid white;
-  padding: 0.5em 0 0.35em 0;
+  padding: 0.5em 0 0.5em 0;
   border-radius: 30px;
   margin: 0.3em auto 0.3em auto;
 `;

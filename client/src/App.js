@@ -26,7 +26,13 @@ const App = () => {
           setScore={setScore}
         />
       )}
-      {gameStage === "GAME-OVER" && <GameOverPage score={score} />}
+      {gameStage === "GAME-OVER" && (
+        <GameOverPage
+          score={score}
+          setScore={setScore}
+          setGameStage={setGameStage}
+        />
+      )}
     </div>
   );
 };
