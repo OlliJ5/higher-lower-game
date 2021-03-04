@@ -24,19 +24,21 @@ const Option = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-image: ${(props) =>
-    `url(https://cdn.nba.com/headshots/nba/latest/1040x760/${props.playerId}.png)`};
+  background: ${(props) =>
+    `linear-gradient(
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.3)
+    ), 
+    url(https://cdn.nba.com/headshots/nba/latest/1040x760/${props.playerId}.png)`};
+
+  background-color: ${(props) => colorPicker.mainTeamColor(props.team)};
   background-position: center;
   background-size: cover;
-  background-color: ${(props) => colorPicker.mainTeamColor(props.team)};
 `;
 
 const TextContainer = styled.div`
   color: #fff;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
   line-height: 1.5;
-  margin-top: 10%;
 `;
 
 const PlayerName = styled.h2`
@@ -90,7 +92,7 @@ const GamePage = ({ playerList, setGameStage, score, setScore }) => {
       );
 
       if (!player.error) {
-        console.log("pelaaja", player);
+        console.log("pelaaja", player.name);
         return player;
       }
     }
@@ -129,9 +131,10 @@ const GamePage = ({ playerList, setGameStage, score, setScore }) => {
     if (checkAnswer(optionChosen)) {
       setAnswerCorrect(true);
       setScore(score + 1);
-      await sleep(3500); //countup and circle animation
-      setFirstOption(secondOption);
+      const newFirstOption = secondOption;
       const newPlayer = await fetchPlayer();
+      await sleep(3500); //countup and circle animation
+      setFirstOption(newFirstOption);
       setSecondOption(newPlayer);
       setIsAnswering(true);
     } else {
@@ -178,7 +181,7 @@ const GamePage = ({ playerList, setGameStage, score, setScore }) => {
             <div>
               <Button onClick={() => choose("HIGHER")}>More</Button>
               <Button onClick={() => choose("LOWER")}>Less</Button>
-              <Text>PPG than {firstOption.PLAYER_NAME}</Text>
+              <Text>PPG than {firstOption.name}</Text>
             </div>
           )}
           {!isAnswering && (
