@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import checkIcon from "./resources/checkIcon.svg";
-import wrongIcon from "./resources/wrongIcon.svg";
+import checkIcon from "../../resources/checkIcon.svg";
+import wrongIcon from "../../resources/wrongIcon.svg";
 import { keyframes } from "styled-components";
 
 const correctAnswerAnimation = keyframes`

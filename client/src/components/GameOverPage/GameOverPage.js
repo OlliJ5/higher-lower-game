@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import cryingJordan from "./resources/crying_jordan.jpg";
+import cryingJordan from "../../resources/crying_jordan.jpg";
 
 const Container = styled.div`
   text-align: center;
@@ -59,7 +59,6 @@ const Button = styled.button`
 
 const GameOverPage = ({ score, setScore, setGameStage }) => {
   const resetGame = () => {
-    console.log("haloo män");
     setScore(0);
     setGameStage("PLAYING");
   };

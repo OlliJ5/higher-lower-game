@@ -66,7 +66,7 @@ def get_team_abbreviation(team_name):
         'Los Angeles Lakers': 'LAL',
         'Denver Nuggets': 'DEN',
         'Indiana Pacers': 'IND',
-        'Portland Trailblazers': 'POR',
+        'Portland Trail Blazers': 'POR',
         'Dallas Mavericks': 'DAL',
         'San Antonio Spurs': 'SAS',
         'Miami Heat': 'MIA',
