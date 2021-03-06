@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import playerService from "./requests/players";
-import GamePage from "./components/GamePage/GamePage";
+import GamePage from "./components/gameView/GamePage";
 import "./reset.css";
-import GameOverPage from "./components/GameOverPage/GameOverPage";
+import GameOverPage from "./components/gameOverView/GameOverPage";
 
 const App = () => {
   const [playerList, setPlayerList] = useState(null);

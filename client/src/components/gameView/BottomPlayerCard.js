@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import CountUp from "react-countup";
-import { Card, StyledText } from "./TopPlayerCard";
+import { Card } from "../common/Card";
+import { StyledText } from "../common/StyledText";
 
 const Button = styled.button`
   width: 50%;

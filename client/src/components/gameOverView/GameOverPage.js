@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import cryingJordan from "../../resources/crying_jordan.jpg";
+import { StyledText } from "../common/StyledText";
 
 const Container = styled.div`
   text-align: center;
@@ -12,37 +13,15 @@ const Container = styled.div`
   color: white;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
 `;
 
 const ContentContainer = styled.div`
-  margin: 25% 5% 0 5%;
-  height: 60%;
+  margin: 0 5% 0 5%;
+  height: 65%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  line-height: 1.5;
-`;
-
-const LargeText = styled.p`
-  font-size: 1.45em;
-  font-weight: 600;
-`;
-
-const Score = styled.p`
-  font-size: 3em;
-  font-weight: 600;
-  color: #fff989;
-`;
-
-const Text = styled.p`
-  font-size: 1.25em;
-  font-weight: 500;
-`;
-
-const Paragraph = styled.p`
-  font-size: 1.25em;
-  font-weight: 400;
+  justify-content: space-around;
 `;
 
 const Button = styled.button`
@@ -66,14 +45,20 @@ const GameOverPage = ({ score, setScore, setGameStage }) => {
   return (
     <Container>
       <ContentContainer>
-        <LargeText>RIP GG</LargeText>
+        <StyledText size="1.45" weight="bold">
+          RIP GG
+        </StyledText>
         <div>
-          <Text>You scored:</Text>
-          <Score>{score}</Score>
-          <Paragraph>
+          <StyledText size="1.25" weight="normal">
+            You scored:
+          </StyledText>
+          <StyledText size="3" weight="bold" color="#fff989">
+            {score}
+          </StyledText>
+          <StyledText size="1.25" weight="light">
             Aliqua enim fugiat officia laboris elit quis in irure est esse
             velit.
-          </Paragraph>
+          </StyledText>
         </div>
         <Button onClick={resetGame}>Try again</Button>
       </ContentContainer>
