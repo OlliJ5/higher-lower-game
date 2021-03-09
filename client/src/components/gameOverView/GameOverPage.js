@@ -14,11 +14,19 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+
+  @media (min-width: 450px) {
+    background-size: inherit;
+    background-position: inherit;
+    background-repeat: round;
+  }
 `;
 
 const ContentContainer = styled.div`
-  margin: 0 5% 0 5%;
   height: 65%;
+  width: 90%;
+  max-width: 450px;
+  margin: 0 auto 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -26,12 +34,13 @@ const ContentContainer = styled.div`
 
 const Button = styled.button`
   width: 70%;
+  max-width: 275px;
   background: rgba(0, 0, 0, 0.3);
   color: #fff;
   font-size: 1.25em;
   font-weight: 600;
   border: 2px solid white;
-  padding: 0.7em 0 0.7em 0;
+  padding: 12px 0 12px 0;
   border-radius: 30px;
   margin: 1em auto 1em auto;
 `;

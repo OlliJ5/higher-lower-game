@@ -8,6 +8,10 @@ const SpinnerContainer = styled.div`
   justify-content: center;
   align-items: center;
   background: linear-gradient(#17408b 50%, #c9082a 50%);
+
+  @media (orientation: landscape) {
+    background: linear-gradient(90deg, #17408b 50%, #c9082a 50%);
+  }
 `;
 
 const Spinner = () => {

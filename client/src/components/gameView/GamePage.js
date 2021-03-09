@@ -10,6 +10,12 @@ import BottomPlayerCard from "./BottomPlayerCard";
 const GameContainer = styled.div`
   text-align: center;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  @media (orientation: landscape) {
+    flex-direction: row;
+  }
 `;
 
 const GamePage = ({ playerList, setGameStage, score, setScore }) => {

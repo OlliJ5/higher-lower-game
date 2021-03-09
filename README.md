@@ -8,7 +8,7 @@ Higher or lower game NBA edition. Inspired by the google higher lower game
 * [x] PLAYING PAGE WITH RANDOM DATA (MOBILE)
 * [x] GAME OVER PAGE (MOBILE)
 * [x] PLUG IN NBA DATA
-* [] RESPONSIVE
+* [x] RESPONSIVE
 
 
 ## Problems
