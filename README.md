@@ -1,6 +1,7 @@
 # HIGHER OR LOWER GAME
 
-Higher or lower game NBA edition.
+Higher or lower game NBA edition. The objective of the game is to guess which player is averaging more points per game during the current NBA season. See how many you can get in a row. My personal best while playing during the development was around 30.
+
 The game can be played [here.](https://higher-lower-nba.herokuapp.com/)
 
 
